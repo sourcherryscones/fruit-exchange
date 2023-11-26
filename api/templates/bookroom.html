@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welcome, {{ fname }}!</h1>
+    <form action="/book" method="post">
+        <input name="title" type="text" placeholder="Title" value="Student project" class="input input-bordered input-primary w-full max-w-xs" />
+        <input name="description" type="text" placeholder="Description" value="ajskdfjksad;jfo;eisa" class="input input-bordered input-primary w-full max-w-xs" />
+        <input name="date" type="text" value="2023-11-22"  class="input input-bordered input-primary w-full max-w-xs"/>
+        <input name="slot_id" type="text" value="T3"  class="input input-bordered input-primary w-full max-w-xs"/>
+        <input type="submit" class="btn btn-neutral">Log in</button>
+    </form>
+    <a href="/logout">Log Out</a>
+</body>
+</html>
