@@ -20,6 +20,7 @@
   },
   "proxy": "http://localhost:5000",
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.7",
     "svelte-spa-router": "^3.3.0"
   }
 }

@@ -2,6 +2,13 @@
     import Day from './Day.svelte';
     import { onMount } from 'svelte';
     import Nav from './Nav.svelte'
+    import { first_name } from './stores';
+
+    let nameVal = ', '
+
+    first_name.subscribe((val) => {
+        nameVal += val;
+    })
 
     let urlbase = 'http://127.0.0.1:5000';
     
@@ -15,14 +22,17 @@
         const resp = await res.json();
         console.log(resp)
         week = resp;
+        console.log("VALUE OF FIRST NAME STORE VAR")
+        console.log(first_name)
     });
 </script>
 
-<main class="w-fit m-0 place-content-center">
+<main class="place-content-center">
     <Nav />
-    <div class="flex gap-4 w-fit">
+    <h1 class="prose-xl font-bold">Welcome{nameVal}!</h1>
+    <div class="flex gap-4 w-fit m-0 place-content-center">
         {#each week as day}
-                <Day slots={day} weekday={wd}/>
+                <Day slots={day} weekday={wd++}/>
         {/each}
     </div>
 </main>

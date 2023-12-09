@@ -1,5 +1,22 @@
 <script>
-
+  let urlbase = 'http://127.0.0.1:5000'
+  import { push } from 'svelte-spa-router'
+  import { isloggedin } from "./stores";
+  function logout(){
+      const lo = fetch(urlbase + '/logout', {
+          method:'POST',
+          body: JSON.stringify({'logout': true}),
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      }).then(resp => resp.json().then(res => {
+          let loggedOut = res['logoutsuccessful'];
+          if (loggedOut == true){
+              isloggedin.set(false)
+              push('/signin')
+          }
+      }))
+    }
 </script>
 
 <main class="container">
@@ -40,6 +57,7 @@
     </div>
     <div class="navbar-end">
       <a class="btn btn-warning">Button</a>
+      <button class="btn btn-error" on:click={() => {logout()}}>Log Out</button>
     </div>
   </div>
     <!---->

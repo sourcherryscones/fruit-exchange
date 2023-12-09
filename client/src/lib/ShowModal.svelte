@@ -1,4 +1,4 @@
-<script>
+<!--<script>
 	import Modal from './Modal.svelte';
 
 	let showModal = false;
@@ -28,4 +28,4 @@
 	</ol>
 
 	<a href="https://www.merriam-webster.com/dictionary/modal">merriam-webster.com</a>
-</Modal>
+</Modal>-->

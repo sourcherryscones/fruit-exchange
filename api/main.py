@@ -38,7 +38,7 @@ def get_schedule():
     temp = deepcopy(SCHEDULE_TEMPLATE)
     td = date.today()
     last_monday = td - timedelta(days=td.weekday())
-    print(last_monday)
+    # print(last_monday)
     allreqs = Request.query.all()
     freqs = {"M1": 0, "M2": 0,"M3": 0, "M4": 0,"M5": 0, "M6": 0,"M7": 0, "ML": 0,
              "T1": 0, "T2": 0,"T3": 0, "T7": 0, "TL":0, 
@@ -71,17 +71,26 @@ def bookroom():
 
 @main.route('/book', methods=['POST'])
 def book():
-    title=request.form.get('title')
-    description=request.form.get('description')
-    uid=session["uid"]
-    fecha=date.fromisoformat(request.form.get('date'))
-    slot_id=request.form.get('slot_id')
-    req = Request(title=title, description=description,uid=uid,date=fecha,slot_id=slot_id,is_approved=False)
-    db.session.add(req)
+    req = request.json
+    title=req['title']
+    description=req['description']
+    userid=1
+
+    print('REQ GET DATE')
+    print(req['date'])
+    print(type(req['date']))
+    fecha=date.fromisoformat(req['date'])
+    slot_id=req['slot_id'] ########################
+    newreq = Request(title=title, description=description,uid=userid,date=fecha,slot_id=slot_id,is_approved=False)
+    print("request is")
+    print(newreq)
+    db.session.add(newreq)
     db.session.commit()
     print("Request sent!")
-    return redirect('/allreqs'), HTTPStatus(301)
-
+    # return redirect('/allreqs'), HTTPStatus(301)
+    resp = jsonify(newreq)
+    resp.headers.add("Access-Control-Allow-Origin", "*")
+    return resp
 
 @main.route('/allreqs')
 def getallreqs():
