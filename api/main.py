@@ -5,6 +5,7 @@ from datetime import date, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail as sgmail
+from flask_cors import cross_origin
 
 from flask_login import login_required, current_user
 from .models import db, User, Request
@@ -34,6 +35,7 @@ def holamundo():
 
 
 @main.route('/getschedule')
+@cross_origin()
 def get_schedule():
     temp = deepcopy(SCHEDULE_TEMPLATE)
     td = date.today()
@@ -47,7 +49,7 @@ def get_schedule():
              "F4": 0, "F5": 0,"F6": 0, "FL": 0,}
     
     for r in allreqs:
-        freqs[r["slot_id"]] = freqs[r["slot_id"]] + 1
+        freqs[r.slot_id] = freqs[r.slot_id] + 1
 
     for day in temp:
         for slot in day:
@@ -66,6 +68,7 @@ def get_schedule():
 
 
 @main.route('/bookroom')
+@cross_origin
 def bookroom():
     return render_template('bookroom.html')
 
@@ -88,8 +91,8 @@ def book():
     db.session.commit()
     print("Request sent!")
     # return redirect('/allreqs'), HTTPStatus(301)
-    resp = jsonify(newreq)
-    resp.headers.add("Access-Control-Allow-Origin", "*")
+    resp = jsonify(newreq.to_obj())
+    # resp.headers.add("Access-Control-Allow-Origin", "*")
     return resp
 
 @main.route('/allreqs')

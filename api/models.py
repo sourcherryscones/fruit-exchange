@@ -22,6 +22,14 @@ class User(UserMixin, db.Model):
     def asstring(self):
         return f'User(full_name="{self.full_name}",email="{self.email}",password="{self.password}",u_type="{self.u_type}")'
 
+    def to_object(self):
+        obj = {
+            "id": self.id,
+            "full_name": self.full_name,
+            "email": self.email,
+            "u_type": self.u_type
+        }
+        return obj
 
 # Request model
 
@@ -38,7 +46,19 @@ class Request(db.Model):
     booker = relationship('User', foreign_keys='Request.uid')
 
     def __repr__(self):
-        return f"<REQUEST from {self.booker.full_name} for {self.slot_id}"
+        return f"<REQUEST from USER {self.uid} for {self.slot_id}"
     
     def asstring(self):
         return f'Request(title="{self.title}",description="{self.description}",uid="{self.uid}",date={self.date}, slot_id="{self.slot_id}", is_approved={self.is_approved})'
+
+    def to_obj(self):
+        obj = {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "uid": self.uid,
+            "date": self.date,
+            "date_sent": self.date_sent,
+            "slot_id": self.slot_id,
+            "is_approved": self.is_approved
+        }
