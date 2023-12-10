@@ -25,7 +25,7 @@
             if (id){
                 reasonforreq='';
                 descrip='';
-                push('/feed');
+                push('/week');
             } else{
                 push('/error')
             }

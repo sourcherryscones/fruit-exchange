@@ -49,15 +49,17 @@ def get_schedule():
              "F4": 0, "F5": 0,"F6": 0, "FL": 0,}
     
     for r in allreqs:
-        freqs[r.slot_id] = freqs[r.slot_id] + 1
+        if r.is_approved == True:
+            freqs[r.slot_id] = freqs[r.slot_id] + 1
 
     for day in temp:
         for slot in day:
             slot["date"] = last_monday.isoformat()
-            if freqs[slot["slot_id"]] > MAX_ROOMS:
+            if freqs[slot["slot_id"]] >= MAX_ROOMS:
                 slot["bookable"] = False
             else:
                 slot["bookable"] = True
+            
         last_monday = last_monday + timedelta(days=1)
     
     # print("TEMP IS")
@@ -79,20 +81,17 @@ def book():
     description=req['description']
     userid=1
 
-    print('REQ GET DATE')
-    print(req['date'])
-    print(type(req['date']))
     fecha=date.fromisoformat(req['date'])
     slot_id=req['slot_id'] ########################
     newreq = Request(title=title, description=description,uid=userid,date=fecha,slot_id=slot_id,is_approved=False)
     print("request is")
     print(newreq)
     db.session.add(newreq)
+    db.session.flush()
     db.session.commit()
     print("Request sent!")
-    # return redirect('/allreqs'), HTTPStatus(301)
-    resp = jsonify(newreq.to_obj())
-    # resp.headers.add("Access-Control-Allow-Origin", "*")
+    resp = jsonify(newreq)
+    print(resp)
     return resp
 
 @main.route('/allreqs')
