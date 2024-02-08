@@ -45,16 +45,5 @@ def unauth():
 def logout():
     print("MADE IT TO LOGOUT ROUTE OH MY GOSH")
     req = request.json
-    print(req['logout'])
-    if "uid" in session:
-        print("UID AS READ BY LOGOUT IS")
-        print(session['uid'])
-    else:
-        print('no uid in there')
-    if req['logout'] == True and "uid" in session:
-        print("user was logged in")
-        session.pop("uid", None)
-        return redirect('/'), HTTPStatus(301)
-    failmsg = jsonify({'logout': False})
-    print(failmsg)
-    return failmsg
+    session.clear()
+    return jsonify({"logoutsuccessful": True})

@@ -25,7 +25,7 @@ function userLogin(){
                 password='';
                 isloggedin.set(true)
                 first_name.set(res["firstname"])
-                push('/week');
+                push('/fruits');
             } else{
                 if (res['error'] == 'USER NOT FOUND'){
                     push('/error')
@@ -35,7 +35,8 @@ function userLogin(){
         }));
     }
 </script>
-<div>    <input name="username" type="text" placeholder="Type here" bind:value={username} class="input input-bordered input-primary w-full max-w-xs" />
-    <input name="passwd" type="password" placeholder="Type here" bind:value={password} class="input input-bordered input-primary w-full max-w-xs" />
+<div>
+    <input name="username" type="text" placeholder="Type here" bind:value={username} class="mx-0 input input-bordered input-primary" />
+    <input name="passwd" type="password" placeholder="Type here" bind:value={password} class="input input-bordered input-primary " />
     <input type="submit" value="Log In" class="btn btn-neutral" on:click={() => {userLogin()}} />
 </div>

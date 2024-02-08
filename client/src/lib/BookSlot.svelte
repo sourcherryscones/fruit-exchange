@@ -3,6 +3,8 @@
 	export let slot_name;
 	export let sdata;
 	import { push } from 'svelte-spa-router'
+	let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+
 
 	let reasonforreq = '';
 	let descrip = '';
@@ -25,6 +27,7 @@
             if (id){
                 reasonforreq='';
                 descrip='';
+				dialog.close()
                 push('/week');
             } else{
                 push('/error')
@@ -46,7 +49,8 @@
             <div class="card-body cursor-auto">
 					<div class="space-y-12">
 					  <div class="border-b border-gray-900/10 pb-12">
-						<h2 class="text-base font-semibold leading-7 text-gray-900">Book a room during <span class="text-red-500 font-bold">{slot_name}</span> on <span class="text-red-500 font-bold"></span></h2>
+						<h2 class="text-base font-semibold leading-7 text-gray-900">Book a room during <span class="text-red-500 font-bold">{slot_name}</span> on {weekdays[sdata["day"]]}<span class="text-red-500 font-bold"></span></h2>
+						<p>Current number of requests: {sdata["freq"]}</p>
 						<p class="mt-1 text-sm leading-6 text-gray-600">This information will help our librarians prioritize your request accordingly!</p>
 				  
 						  <div class="sm:col-span-4">

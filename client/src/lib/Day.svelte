@@ -1,17 +1,22 @@
 <script>
     import Nav from './Nav.svelte'
     import Slot from './Slot.svelte'
+    import AdminSlot from './AdminSlot.svelte';
     export let slots;
-    export let weekday;
+    export let admin;
     let weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri"]
 </script>
 <main>
-    <div class="card bg-gradient-to-r from-orange-100 to-orange-200">
-    <h1 class="font-black text-base">{weekdays[weekday]} | {slots[0]["date"]}</h1>
-    {#each slots as s}
-        <div>
-            <Slot slot_data={s} />
+    <div class="card bg-orange-100 w-96 bg-base-100 shadow-xl">
+        <figure class="px-10 pt-10">
+          <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" class="rounded-xl" />
+        </figure>
+        <div class="card-body items-center text-center">
+          <h2 class="card-title">Shoes!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div class="card-actions">
+            <button class="btn btn-primary">Buy Now</button>
+          </div>
         </div>
-    {/each}
-    </div>
+      </div>
 </main>

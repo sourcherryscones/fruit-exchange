@@ -41,7 +41,7 @@ def get_schedule():
     td = date.today()
     last_monday = td - timedelta(days=td.weekday())
     # print(last_monday)
-    allreqs = Request.query.all()
+    allreqs = Request.query.all() # filter by dates from mon to fri
     freqs = {"M1": 0, "M2": 0,"M3": 0, "M4": 0,"M5": 0, "M6": 0,"M7": 0, "ML": 0,
              "T1": 0, "T2": 0,"T3": 0, "T7": 0, "TL":0, 
              "W4": 0, "W5": 0,"W6": 0, "WL": 0,
@@ -53,8 +53,11 @@ def get_schedule():
             freqs[r.slot_id] = freqs[r.slot_id] + 1
 
     for day in temp:
+
         for slot in day:
+            slot["freq"] = freqs[slot["slot_id"]]
             slot["date"] = last_monday.isoformat()
+            slot["day"] = last_monday.weekday()
             if freqs[slot["slot_id"]] >= MAX_ROOMS:
                 slot["bookable"] = False
             else:
@@ -102,4 +105,19 @@ def getallreqs():
     return render_template('admindash.html',reqs=allreqs)
 
 
+@main.route('/approve', methods=["PATCH"])
+def approve_request():
+    req = request.json
+    slot_id = req["slot_id"]
+    slot_date = req["date"]
+    slot_booker = req["uid"]
+    print(slot_id)
+    print(slot_date)
+    print(slot_booker)
 
+    tba = Request.query.filter_by(uid=slot_booker, date=slot_date, slot_id=slot_id).first()
+    if tba:
+        tba.is_approved = True
+        db.session.commit()
+
+    return jsonify({"approved": True})

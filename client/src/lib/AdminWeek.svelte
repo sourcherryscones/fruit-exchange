@@ -29,10 +29,10 @@
 
 <main class="place-content-center">
     <Nav />
-    <h1 class="prose-xl font-bold">Welcome{nameVal}!</h1>
+    <h1 class="prose-xl font-bold">Welcome, admin!</h1>
     <div class="flex gap-4 w-fit m-0 place-content-center">
         {#each week as day}
-                <Day slots={day} admin={false}/>
+                <Day slots={day} admin={true}/>
         {/each}
     </div>
 </main>

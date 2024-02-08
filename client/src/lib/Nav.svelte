@@ -13,6 +13,7 @@
           let loggedOut = res['logoutsuccessful'];
           if (loggedOut == true){
               isloggedin.set(false)
+              console.log("made it to pre-re-navigation thingy")
               push('/signin')
           }
       }))
@@ -56,7 +57,6 @@
       </ul>
     </div>
     <div class="navbar-end">
-      <a class="btn btn-warning">Button</a>
       <button class="btn btn-error" on:click={() => {logout()}}>Log Out</button>
     </div>
   </div>

@@ -6,6 +6,8 @@ import Week from './Week.svelte'
 import ShowModal from './ShowModal.svelte'
 import LoginPage from './LoginPage.svelte'
 import Error from './Error.svelte'
+import AdminWeek from './AdminWeek.svelte'
+import NewFeed from './NewFeed.svelte'
 import { wrap } from 'svelte-spa-router/wrap'
 import { first_name } from './stores.js'
 
@@ -20,5 +22,7 @@ export const routes = {
     }),
     "/modaltest": ShowModal,
     "/signin": LoginPage,
-    "/error": Error
+    "/error": Error,
+    "/admin": AdminWeek,
+    "/fruits": NewFeed
 }
