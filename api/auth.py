@@ -1,49 +1,43 @@
+# some imports! notably, packages for handling flask routing, sendgrid, and a bit of auth
 import os
 from flask import request, send_from_directory, jsonify, session, redirect, Blueprint, current_app, render_template
-from http import HTTPStatus
-from datetime import date
 from werkzeug.security import generate_password_hash, check_password_hash
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail as sgmail
-
 from flask_login import login_required, current_user
-from .models import db, User, Request
+from .models import db, User
 auth = Blueprint('auth', __name__)
 
+@auth.route('/register', methods=['POST'])
+def register():
+    pass
+    # get JSON from request
+
+    # make sure you got some valid input data (ie valid emails, minimum character # for passwords, do the passwords match?)
+
+    # create a user object! store passwords using generate_password_hash :)
+
+    # return json to tell the frontend whether or not you successfully registered!
+
+# route for logging in
 @auth.route('/login', methods=['POST'])
 def login():
-    req = request.json
-    print(request.json)
-    username = req['username']
-    passwd = req['password']
-    print("USERNAME IS")
-    print(username)
-    print("PASSWORD IS")
-    print(passwd)
-    usr = User.query.filter_by(full_name=username).first()
-    if not usr:
-        return jsonify({"success": False, "error": "USER DOES NOT EXIST"})
-    if passwd != usr.password:
-        return jsonify({"success": False, "error": "PASSWORD DOES NOT MATCH"})
-    session["uid"] = usr.id
-    print("UID HAS BEEN PUT INTO SESSION")
-    session["fname"] = usr.full_name.split(' ')[0]
-    session["utype"] = usr.u_type
-    print("UID IS")
-    print(session["uid"])
-    print("USER FIRST NAME IS:")
-    print(session["fname"])
-    # return redirect('/home'), HTTPStatus(301)
-    return jsonify({"success": True, "firstname": session["fname"]})
+    pass 
+    # the frontend will be posting JSON for username and password, so you need to get that from the request
+
+    # check to see if the user exists and has entered the password correctly
+     
+    #add user id to session OR use flask-login's login_user function
+
+    # return json to tell the frontend whether or not the login happened successfully!
 
 
-@auth.route('/unauth')
+# this is just a place you can redirect if login goes wrong 
+@auth.route('/auth_error')
 def unauth():
-    return '<h1>Wrong credentials</h1>'
+    return '<h1>Something went wrong, please try again!</h1>'
 
 @auth.route('/logout', methods=['POST'])
 def logout():
-    print("MADE IT TO LOGOUT ROUTE OH MY GOSH")
-    req = request.json
-    session.clear()
-    return jsonify({"logoutsuccessful": True})
+    pass
+    # log out! again, can just work with flasks's session or can use flask-login
+
+    # again, send status back to frontend when done!

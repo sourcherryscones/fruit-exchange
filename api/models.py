@@ -1,3 +1,4 @@
+# again, helpful imports; the UserMixin class from flask-login allows the login_user function in auth.py to work, as does the login_manager variable from __init__.py
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from api import login_manager
@@ -7,42 +8,24 @@ import datetime
 from dataclasses import dataclass
 db = SQLAlchemy(engine_options={"pool_pre_ping": True, "pool_recycle":300})
 
+# if you're not using flask-login you can ignore this
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.filter_by(id=int(user_id)).first()
 
 @dataclass
 class User(UserMixin, db.Model):
-    id:int = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    full_name:str = db.Column(db.String(50), nullable=False, unique=True)
-    email:str = db.Column(db.String(100), nullable=False, unique=True)
-    password:str = db.Column(db.String(200), nullable=False)
-    u_type:str = db.Column(db.String(9), nullable=False)
-
-    def __repr__(self):
-        return f"<{self.u_type}: {self.full_name}>"
-    
-    def asstring(self):
-        return f'User(full_name="{self.full_name}",email="{self.email}",password="{self.password}",u_type="{self.u_type}")'
+    pass
+    # what fields will you need, and of which types?
 
 
 # Request model
 
 @dataclass
-class Request(db.Model):
-    id:int = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    title:str = db.Column(db.String(50), nullable=False)
-    description:str = db.Column(db.String(100))
-    uid:int = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False) # db.ForeignKey(users.id)
-    date:datetime.date = db.Column(db.Date)
-    date_sent:datetime.datetime = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    slot_id:int =db.Column(db.String(3), nullable=False)
-    is_approved:bool = db.Column(db.Boolean, nullable=False)
+class ProduceType(db.Model):
+    # what fields will you need in order to store all relevant info about each fruit tree/plant?
+    # are there any that you'll need to connect to the user table? if so, the below line of code shows us how to create that relation:
+    field_that_will_contain_a_user_object = relationship('User', foreign_keys='ProduceType.name_of_field_IN_THE_PRODUCETYPE_CLASS_that_you_want_to_refer_to_a_User_object')
 
-    booker = relationship('User', foreign_keys='Request.uid')
-
-    def __repr__(self):
-        return f"<REQUEST from USER {self.uid} for {self.slot_id}"
-    
-    def asstring(self):
-        return f'Request(title="{self.title}",description="{self.description}",uid="{self.uid}",date={self.date}, slot_id="{self.slot_id}", is_approved={self.is_approved})'
+   
+# add __repr__ functions as they're convenient for you :)

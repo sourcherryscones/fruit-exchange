@@ -20,15 +20,14 @@ def create_app(conf_class=Config):
 
     
 
-    #blueprint setup
+    # blueprint setup
+    # notice that in auth.py and main.py, we create Blueprint objects that we then register here as part of the application
     from .auth import auth as auth_bp
     app.register_blueprint(auth_bp)
 
     from .main import main as main_bp
     app.register_blueprint(main_bp)
 
-    from .admin import admin as admin_bp
-    app.register_blueprint(admin_bp)
 
     return app
 

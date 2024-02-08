@@ -13,8 +13,4 @@ class Config:
     MAIL_SENDER = os.environ.get('MAIL_SENDER')
     MAIL_DEFAULT_SENDER = os.environ.get('DFLT_SENDER')
     MAIL_PASSWORD = os.environ.get('MAIL_PW')
-    ALLOWED_EXTENSIONS={"pdf","png","jpg","jpeg"}
-    BUCKET_NAME=os.environ.get('BUCKET_NAME')
-    AWS_AK=os.environ.get('AWS_AK')
-    AWS_SK=os.environ.get('AWS_SK')
 
